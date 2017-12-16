@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
-load_dotenv('.env')
+status = load_dotenv('.env')
+if not status:
+    raise RuntimeError("failed to load .env")
 
 SMTP_ARGS = {
     'mailhost': 'smtp.gmail.com',
@@ -17,3 +19,4 @@ email_handler = SMTPHandler(**SMTP_ARGS)
 email_logger = logging.getLogger('email_logger')
 email_logger.addHandler(email_handler)
 email_logger.setLevel = logging.INFO
+email_logger.propagate = False
